@@ -1,0 +1,14 @@
+{
+    "name": "andcarpi/laravel-endereco-e-telefone",
+    "description": "",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anderson Carpi",
+            "email": "kustelac@yahoo.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
