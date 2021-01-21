@@ -2,36 +2,33 @@
 
 namespace Andcarpi\LaravelEnderecoETelefone\Console\Commands;
 
-use Andcarpi\LaravelEnderecoETelefone\Models\State;
+use Andcarpi\LaravelEnderecoETelefone\Models\City;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class SeedBrazilianStates extends Command
+class SeedBrazilianCities extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'states:seed';
+    protected $signature = 'cities:seed';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Seed States Table with Brazilian States using IBGE information.';
+    protected $description = 'Seed Cities Table with Brazilian Cities using IBGE information.';
 
-    protected $url = 'http://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome';
+    protected $url = 'http://servicodados.ibge.gov.br/api/v1/localidades/municipios';
 
     protected $insert_fields = [
         'id'            => 'id',
-        'abbreviation'  => 'sigla',
         'name'          => 'nome',
     ];
-
-    protected $brazil_id = 3469034;
 
     /**
      * Create a new command instance.
@@ -50,25 +47,25 @@ class SeedBrazilianStates extends Command
      */
     public function handle()
     {
-        $this->line('Downloading states information...');
+        $this->line('Downloading cities information...');
         $request = Http::get($this->url);
         if ($request->status() == 200) {
             $this->line('Download complete. Seeding started.');
             DB::transaction(function () use ($request) {
-                $states = $request->json();
-                foreach($states as $state_info) {
-                    $state = new State();
+                $cities = $request->json();
+                foreach($cities as $city_info) {
+                    $city = new City();
                     foreach ($this->insert_fields as $field => $index) {
-                        $state->{$field} = $state_info[$index];
+                        $city->{$field} = $city_info[$index];
                     }
-                    $state->country_id = $this->brazil_id;
-                    $state->save();
+                    $city->state_id = $city_info['microrregiao']['mesorregiao']['UF']['id'];
+                    $city->save();
                 };
-                $this->info('Seeding complete. ' . count($states) . ' states added.');
+                $this->info('Seeding complete. ' . count($cities) . ' cities added.');
             });
             return 0;
         }
-        $this->error('Failed to download and seed states. Verify your internet connection and/or url link.');
+        $this->error('Failed to download and seed cities. Verify your internet connection and/or url link.');
 
     }
 }
