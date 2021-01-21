@@ -11,6 +11,11 @@
     ],
     "minimum-stability": "dev",
     "require": {},
+    "autoload": {
+        "psr-4": {
+            "Andcarpi\\LaravelEnderecoETelefone\\": "src/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
