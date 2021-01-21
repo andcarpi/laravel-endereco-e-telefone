@@ -2,6 +2,7 @@
 
 namespace Andcarpi\LaravelEnderecoETelefone;
 
+use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedBrazilianStates;
 use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedCountries;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,6 +30,7 @@ class LaravelEnderecoETelefoneServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 SeedCountries::class,
+                SeedBrazilianStates::class,
             ]);
         }
     }

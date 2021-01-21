@@ -6,6 +6,7 @@ use Andcarpi\LaravelEnderecoETelefone\Models\Country;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class SeedCountries extends Command
@@ -60,7 +61,7 @@ class SeedCountries extends Command
             DB::transaction(function () use ($request) {
                 $geonames_countries = Collect(preg_split('/\n\r|\n/', $request->body()))
                     ->filter(function ($value, $key) {
-                        return (!Str::startsWith($value, '#')) and !empty($item);
+                        return (!Str::startsWith($value, '#')) and !empty($value);
                     })->each(function ($value, $key) {
                         $info = preg_split('/\t/', $value);
                         $country = new Country();

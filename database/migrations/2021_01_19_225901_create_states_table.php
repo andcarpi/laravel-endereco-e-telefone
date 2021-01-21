@@ -15,6 +15,9 @@ class CreateStatesTable extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('abbreviation');
+            $table->foreignId('country_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
