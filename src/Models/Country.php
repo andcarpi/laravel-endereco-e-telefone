@@ -9,7 +9,13 @@ class Country extends Model
 {
     use HasFactory;
 
-    public function states() {
+    public function states(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(State::class);
+    }
+
+    public function estados(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->states();
     }
 }

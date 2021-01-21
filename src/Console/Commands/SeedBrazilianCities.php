@@ -14,7 +14,7 @@ class SeedBrazilianCities extends Command
      *
      * @var string
      */
-    protected $signature = 'cities:seed';
+    protected $signature = 'addresses:seed-brazilian-cities';
 
     /**
      * The console command description.
