@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Andcarpi\\LaravelEnderecoETelefone\\LaravelEnderecoETelefoneServiceProvider"
+                "andcarpi\\LaravelEnderecoETelefone\\LaravelEnderecoETelefoneServiceProvider"
             ]
         }
     }
