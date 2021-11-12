@@ -1,8 +1,8 @@
 <?php
 
-namespace Andcarpi\LaravelEnderecoETelefone\Console\Commands;
+namespace andcarpi\LaravelEnderecoETelefone\Console\Commands;
 
-use Andcarpi\LaravelEnderecoETelefone\Models\Country;
+use andcarpi\LaravelEnderecoETelefone\Models\Pais;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -16,25 +16,25 @@ class SeedCountries extends Command
      *
      * @var string
      */
-    protected $signature = 'addresses:seed-countries';
+    protected $signature = 'enderecos:seed-paises';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update Countries with geoname.org info';
+    protected $description = 'Insere dados dos países utilizando a API do IBGE';
 
-    protected $url = 'http://download.geonames.org/export/dump/countryInfo.txt';
+    protected $url = 'http://servicodados.ibge.gov.br/api/v1/paises/';
 
     protected $insert_fields = [
         'id'            => 16,
         'iso'           =>  0,
         'iso3'          =>  1,
-        'name'          =>  4,
-        'currency'      => 10,
-        'currency_name' => 11,
-        'language'      => 15,
+        'nome'          =>  4,
+        //'currency'      => 10,
+        //'currency_name' => 11,
+        //'language'      => 15,
     ];
 
     /**
@@ -54,27 +54,25 @@ class SeedCountries extends Command
      */
     public function handle()
     {
-        $this->line('Downloading country information...');
+        $this->line('Fazendo o download das informações...');
         $request = Http::get($this->url);
         if ($request->status() == 200) {
-            $this->line('Download complete. Seeding started.');
+            $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
-                $geonames_countries = Collect(preg_split('/\n\r|\n/', $request->body()))
-                    ->filter(function ($value, $key) {
-                        return (!Str::startsWith($value, '#')) and !empty($value);
-                    })->each(function ($value, $key) {
-                        $info = preg_split('/\t/', $value);
-                        $country = new Country();
-                        foreach ($this->insert_fields as $field => $index) {
-                            $country->{$field} = $info[$index];
-                        }
-                        $country->save();
-                    });
-                $this->info('Seeding complete. ' . $geonames_countries->count() . ' countries added.');
+                $countries = $request->json();
+                foreach ($countries as $country) {
+                    $pais = new Pais();
+                    $pais->id = $country['id']['M49'];
+                    $pais->iso = $country['id']['ISO-3166-1-ALPHA-2'];
+                    $pais->iso3 = $country['id']['ISO-3166-1-ALPHA-3'];
+                    $pais->nome = $country['nome']['abreviado'];
+                    $pais->save();
+                }
+                $this->info('Inserção de dados completa. ' . count($countries) . ' países cadastrados.');
             });
             return 0;
         }
-        $this->error('Failed to download and seed countries. Verify your internet connection and/or url link.');
+        $this->error('Falha ao inserir os países. Verifique sua conexão com a internet ou se o link de download ainda é ativo.');
 
     }
 }

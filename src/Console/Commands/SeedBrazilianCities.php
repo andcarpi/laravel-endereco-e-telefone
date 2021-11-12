@@ -1,8 +1,8 @@
 <?php
 
-namespace Andcarpi\LaravelEnderecoETelefone\Console\Commands;
+namespace andcarpi\LaravelEnderecoETelefone\Console\Commands;
 
-use Andcarpi\LaravelEnderecoETelefone\Models\City;
+use andcarpi\LaravelEnderecoETelefone\Models\Cidade;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -14,7 +14,7 @@ class SeedBrazilianCities extends Command
      *
      * @var string
      */
-    protected $signature = 'addresses:seed-brazilian-cities';
+    protected $signature = 'enderecos:seed-cidades';
 
     /**
      * The console command description.
@@ -27,7 +27,7 @@ class SeedBrazilianCities extends Command
 
     protected $insert_fields = [
         'id'            => 'id',
-        'name'          => 'nome',
+        'nome'          => 'nome',
     ];
 
     /**
@@ -47,25 +47,25 @@ class SeedBrazilianCities extends Command
      */
     public function handle()
     {
-        $this->line('Downloading cities information...');
+        $this->line('Fazendo o download das informações...');
         $request = Http::get($this->url);
         if ($request->status() == 200) {
-            $this->line('Download complete. Seeding started.');
+            $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
                 $cities = $request->json();
                 foreach($cities as $city_info) {
-                    $city = new City();
+                    $city = new Cidade();
                     foreach ($this->insert_fields as $field => $index) {
                         $city->{$field} = $city_info[$index];
                     }
-                    $city->state_id = $city_info['microrregiao']['mesorregiao']['UF']['id'];
+                    $city->estado_id = $city_info['microrregiao']['mesorregiao']['UF']['id'];
                     $city->save();
                 };
-                $this->info('Seeding complete. ' . count($cities) . ' cities added.');
+                $this->info('Inserção de dados completa. ' . count($cities) . ' cidades cadastrados.');
             });
             return 0;
         }
-        $this->error('Failed to download and seed cities. Verify your internet connection and/or url link.');
+        $this->error('Falha ao inserir as cidades. Verifique sua conexão com a internet ou se o link de download ainda é ativo');
 
     }
 }

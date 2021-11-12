@@ -1,11 +1,11 @@
 <?php
 
-namespace Andcarpi\LaravelEnderecoETelefone;
+namespace andcarpi\LaravelEnderecoETelefone;
 
-use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedAll;
-use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedBrazilianCities;
-use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedBrazilianStates;
-use Andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedCountries;
+use andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedAll;
+use andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedBrazilianCities;
+use andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedBrazilianStates;
+use andcarpi\LaravelEnderecoETelefone\Console\Commands\SeedCountries;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelEnderecoETelefoneServiceProvider extends ServiceProvider
@@ -20,6 +20,12 @@ class LaravelEnderecoETelefoneServiceProvider extends ServiceProvider
         //
     }
 
+    private function publishMigrations()
+    {
+        $path = $this->getMigrationsPath();
+        $this->publishes([$path => database_path('migrations')], 'migrations');
+    }
+
     /**
      * Bootstrap services.
      *
@@ -27,7 +33,7 @@ class LaravelEnderecoETelefoneServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom($this->getMigrationsPath());
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -37,5 +43,10 @@ class LaravelEnderecoETelefoneServiceProvider extends ServiceProvider
                 SeedBrazilianCities::class,
             ]);
         }
+    }
+
+    private function getMigrationsPath()
+    {
+        return __DIR__ . '/../database/migrations/';
     }
 }

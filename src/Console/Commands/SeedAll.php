@@ -1,6 +1,6 @@
 <?php
 
-namespace Andcarpi\LaravelEnderecoETelefone\Console\Commands;
+namespace andcarpi\LaravelEnderecoETelefone\Console\Commands;
 
 use Illuminate\Console\Command;
 
@@ -11,7 +11,7 @@ class SeedAll extends Command
      *
      * @var string
      */
-    protected $signature = 'addresses:seed';
+    protected $signature = 'enderecos:seed';
 
     /**
      * The console command description.
@@ -37,8 +37,8 @@ class SeedAll extends Command
      */
     public function handle()
     {
-        $this->call('addresses:seed-countries');
-        $this->call('addresses:seed-brazilian-states');
-        $this->call('addresses:seed-brazilian-cities');
+        $this->call('enderecos:seed-paises');
+        $this->call('enderecos:seed-estados');
+        $this->call('enderecos:seed-cidades');
     }
 }

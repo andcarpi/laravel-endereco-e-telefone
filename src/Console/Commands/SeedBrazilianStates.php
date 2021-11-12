@@ -1,8 +1,8 @@
 <?php
 
-namespace Andcarpi\LaravelEnderecoETelefone\Console\Commands;
+namespace andcarpi\LaravelEnderecoETelefone\Console\Commands;
 
-use Andcarpi\LaravelEnderecoETelefone\Models\State;
+use andcarpi\LaravelEnderecoETelefone\Models\Estado;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -14,7 +14,7 @@ class SeedBrazilianStates extends Command
      *
      * @var string
      */
-    protected $signature = 'addresses:seed-brazilian-states';
+    protected $signature = 'enderecos:seed-estados';
 
     /**
      * The console command description.
@@ -27,11 +27,11 @@ class SeedBrazilianStates extends Command
 
     protected $insert_fields = [
         'id'            => 'id',
-        'abbreviation'  => 'sigla',
-        'name'          => 'nome',
+        'abreviacao'  => 'sigla',
+        'nome'          => 'nome',
     ];
 
-    protected $brazil_id = 3469034;
+    protected $brazil_id = 76;
 
     /**
      * Create a new command instance.
@@ -50,25 +50,25 @@ class SeedBrazilianStates extends Command
      */
     public function handle()
     {
-        $this->line('Downloading states information...');
+        $this->line('Fazendo o download das informações...');
         $request = Http::get($this->url);
         if ($request->status() == 200) {
-            $this->line('Download complete. Seeding started.');
+            $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
                 $states = $request->json();
                 foreach($states as $state_info) {
-                    $state = new State();
+                    $state = new Estado();
                     foreach ($this->insert_fields as $field => $index) {
                         $state->{$field} = $state_info[$index];
                     }
-                    $state->country_id = $this->brazil_id;
+                    $state->paises_id = $this->brazil_id;
                     $state->save();
                 };
-                $this->info('Seeding complete. ' . count($states) . ' states added.');
+                $this->info('Inserção de dados completa. ' . count($states) . ' estados cadastrados.');
             });
             return 0;
         }
-        $this->error('Failed to download and seed states. Verify your internet connection and/or url link.');
+        $this->error('Falha ao inserir os estados. Verifique sua conexão com a internet ou se o link de download ainda é ativo.');
 
     }
 }

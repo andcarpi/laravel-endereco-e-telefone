@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatesTable extends Migration
+class CreateEstadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreateStatesTable extends Migration
             $table->id();
             $table->string('nome');
             $table->string('abreviacao');
-            $table->foreignId('pais_id')->constrained()->onDelete('cascade');
+            $table->foreignId('paises_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

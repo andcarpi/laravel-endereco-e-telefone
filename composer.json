@@ -13,7 +13,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Andcarpi\\LaravelEnderecoETelefone\\": "src/"
+            "andcarpi\\LaravelEnderecoETelefone\\": "src/"
         }
     },
     "extra": {
