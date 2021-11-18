@@ -8,13 +8,23 @@ trait TemTelefones
 {
 
     /**
-     * Get all addresses for this model.
+     * Get all phones for this model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function telefones(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
         return $this->morphMany(Telefone::class, 'phonable');
+    }
+
+    /**
+     * Get the phone for this model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function telefone(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Telefone::class, 'phonable');
     }
 
     /**

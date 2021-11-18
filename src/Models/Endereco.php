@@ -9,6 +9,10 @@ class Endereco extends Model
 {
     use HasFactory;
 
+    public function proprietario() {
+        return $this->morphTo();
+    }
+
     public function cidade(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Cidade::class);

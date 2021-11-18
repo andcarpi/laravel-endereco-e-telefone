@@ -14,7 +14,17 @@ trait TemEnderecos
      */
     public function enderecos()
     {
-        return $this->morphMany(Endereco::class, 'addressable');
+        return $this->morphMany(Endereco::class, 'proprietario');
+    }
+
+    /**
+     * Get the address for this model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function endereco()
+    {
+        return $this->morphOne(Endereco::class, 'proprietario');
     }
 
     /**
