@@ -61,12 +61,12 @@ class SeedCountries extends Command
             DB::transaction(function () use ($request) {
                 $countries = $request->json();
                 foreach ($countries as $country) {
-                    $pais = new Pais();
-                    $pais->id = $country['id']['M49'];
-                    $pais->iso = $country['id']['ISO-3166-1-ALPHA-2'];
-                    $pais->iso3 = $country['id']['ISO-3166-1-ALPHA-3'];
-                    $pais->nome = $country['nome']['abreviado'];
-                    $pais->save();
+                    Pais::InsertOrIgnore([
+                        'id'   => $country['id']['M49'],
+                        'iso'  => $country['id']['ISO-3166-1-ALPHA-2'],
+                        'iso3' => $country['id']['ISO-3166-1-ALPHA-3'],
+                        'nome' => $country['nome']['abreviado'],
+                    ]);
                 }
                 $this->info('Inserção de dados completa. ' . count($countries) . ' países cadastrados.');
             });
