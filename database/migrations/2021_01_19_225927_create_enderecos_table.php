@@ -23,6 +23,8 @@ class CreateEnderecosTable extends Migration
             $table->string('cep');
             $table->string('cidade_id');
             $table->string('comprovante')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->morphs('proprietario');
             $table->timestamps();
         });
