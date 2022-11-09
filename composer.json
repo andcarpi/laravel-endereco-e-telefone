@@ -10,7 +10,12 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.2"
+    },
     "autoload": {
         "psr-4": {
             "andcarpi\\LaravelEnderecoETelefone\\": "src/"
