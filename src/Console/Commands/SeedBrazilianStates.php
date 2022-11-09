@@ -26,9 +26,9 @@ class SeedBrazilianStates extends Command
     protected $url = 'http://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome';
 
     protected $insert_fields = [
-        'id'            => 'id',
-        'abreviacao'  => 'sigla',
-        'nome'          => 'nome',
+        'id' => 'id',
+        'abreviacao' => 'sigla',
+        'nome' => 'nome',
     ];
 
     protected $brazil_id = 76;
@@ -56,19 +56,19 @@ class SeedBrazilianStates extends Command
             $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
                 $states = $request->json();
-                foreach($states as $state_info) {
+                foreach ($states as $state_info) {
                     $state = new Estado();
                     foreach ($this->insert_fields as $field => $index) {
                         $state->{$field} = $state_info[$index];
                     }
                     $state->paises_id = $this->brazil_id;
                     $state->save();
-                };
-                $this->info('Inserção de dados completa. ' . count($states) . ' estados cadastrados.');
+                }
+                $this->info('Inserção de dados completa. '.count($states).' estados cadastrados.');
             });
+
             return 0;
         }
         $this->error('Falha ao inserir os estados. Verifique sua conexão com a internet ou se o link de download ainda é ativo.');
-
     }
 }

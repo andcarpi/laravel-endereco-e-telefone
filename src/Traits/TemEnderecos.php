@@ -6,7 +6,6 @@ use andcarpi\LaravelEnderecoETelefone\Models\Endereco;
 
 trait TemEnderecos
 {
-
     /**
      * Get all addresses for this model.
      *
@@ -36,5 +35,4 @@ trait TemEnderecos
     {
         return (bool) $this->enderecos()->count();
     }
-
 }

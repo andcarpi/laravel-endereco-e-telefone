@@ -6,8 +6,6 @@ use andcarpi\LaravelEnderecoETelefone\Models\Pais;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class SeedCountries extends Command
 {
@@ -28,10 +26,10 @@ class SeedCountries extends Command
     protected $url = 'http://servicodados.ibge.gov.br/api/v1/paises/';
 
     protected $insert_fields = [
-        'id'            => 16,
-        'iso'           =>  0,
-        'iso3'          =>  1,
-        'nome'          =>  4,
+        'id' => 16,
+        'iso' => 0,
+        'iso3' => 1,
+        'nome' => 4,
         //'currency'      => 10,
         //'currency_name' => 11,
         //'language'      => 15,
@@ -62,17 +60,17 @@ class SeedCountries extends Command
                 $countries = $request->json();
                 foreach ($countries as $country) {
                     Pais::InsertOrIgnore([
-                        'id'   => $country['id']['M49'],
-                        'iso'  => $country['id']['ISO-3166-1-ALPHA-2'],
+                        'id' => $country['id']['M49'],
+                        'iso' => $country['id']['ISO-3166-1-ALPHA-2'],
                         'iso3' => $country['id']['ISO-3166-1-ALPHA-3'],
                         'nome' => $country['nome']['abreviado'],
                     ]);
                 }
-                $this->info('Inserção de dados completa. ' . count($countries) . ' países cadastrados.');
+                $this->info('Inserção de dados completa. '.count($countries).' países cadastrados.');
             });
+
             return 0;
         }
         $this->error('Falha ao inserir os países. Verifique sua conexão com a internet ou se o link de download ainda é ativo.');
-
     }
 }

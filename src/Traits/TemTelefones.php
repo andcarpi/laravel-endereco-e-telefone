@@ -6,7 +6,6 @@ use andcarpi\LaravelEnderecoETelefone\Models\Telefone;
 
 trait TemTelefones
 {
-
     /**
      * Get all phones for this model.
      *
@@ -36,5 +35,4 @@ trait TemTelefones
     {
         return (bool) $this->telefones()->count();
     }
-
 }

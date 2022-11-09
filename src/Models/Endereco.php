@@ -9,7 +9,8 @@ class Endereco extends Model
 {
     use HasFactory;
 
-    public function proprietario() {
+    public function proprietario()
+    {
         return $this->morphTo();
     }
 

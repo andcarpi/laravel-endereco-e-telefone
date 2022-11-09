@@ -26,8 +26,8 @@ class SeedBrazilianCities extends Command
     protected $url = 'http://servicodados.ibge.gov.br/api/v1/localidades/municipios';
 
     protected $insert_fields = [
-        'id'            => 'id',
-        'nome'          => 'nome',
+        'id' => 'id',
+        'nome' => 'nome',
     ];
 
     /**
@@ -53,19 +53,19 @@ class SeedBrazilianCities extends Command
             $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
                 $cities = $request->json();
-                foreach($cities as $city_info) {
+                foreach ($cities as $city_info) {
                     $city = new Cidade();
                     foreach ($this->insert_fields as $field => $index) {
                         $city->{$field} = $city_info[$index];
                     }
                     $city->estado_id = $city_info['microrregiao']['mesorregiao']['UF']['id'];
                     $city->save();
-                };
-                $this->info('Inserção de dados completa. ' . count($cities) . ' cidades cadastrados.');
+                }
+                $this->info('Inserção de dados completa. '.count($cities).' cidades cadastrados.');
             });
+
             return 0;
         }
         $this->error('Falha ao inserir as cidades. Verifique sua conexão com a internet ou se o link de download ainda é ativo');
-
     }
 }
