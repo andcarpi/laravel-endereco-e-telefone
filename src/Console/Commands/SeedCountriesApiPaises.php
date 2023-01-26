@@ -7,21 +7,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class SeedCountries extends Command
+class SeedCountriesApiPaises extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'enderecos:seed-paises';
+    protected $signature = 'enderecos:seed-paises-api-paises';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Insere dados dos países utilizando a API do IBGE';
+    protected $description = 'Insere dados dos países utilizando a API Paises do IBGE';
 
     protected $url = 'http://servicodados.ibge.gov.br/api/v1/paises/';
 
