@@ -63,7 +63,7 @@ class SeedCountriesApiLocalidades extends Command
                         'id' => $country['id']['M49'],
                         'iso' => $country['id']['ISO-ALPHA-2'],
                         'iso3' => $country['id']['ISO-ALPHA-3'],
-                        'nome' => $country['nome']
+                        'nome' => $country['nome'],
                     ]);
                 }
                 $this->info('Inserção de dados completa. '.count($countries).' países cadastrados.');
