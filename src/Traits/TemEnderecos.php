@@ -28,8 +28,6 @@ trait TemEnderecos
 
     /**
      * Check if model has an address.
-     *
-     * @return bool
      */
     public function temEnderecos(): bool
     {
