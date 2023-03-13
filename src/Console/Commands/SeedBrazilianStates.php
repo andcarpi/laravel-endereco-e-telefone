@@ -51,7 +51,7 @@ class SeedBrazilianStates extends Command
     public function handle()
     {
         $this->line('Fazendo o download das informações...');
-        $request = Http::get($this->url);
+        $request = Http::withoutVerifying()->get($this->url);
         if ($request->status() == 200) {
             $this->line('Download completo. Inserindo informações.');
             DB::transaction(function () use ($request) {
