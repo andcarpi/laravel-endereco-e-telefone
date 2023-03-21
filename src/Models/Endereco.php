@@ -13,7 +13,6 @@ class Endereco extends Model
 
     public static function fromCEP($cep)
     {
-
     }
 
     public function proprietario()
