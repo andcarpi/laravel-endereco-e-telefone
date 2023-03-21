@@ -9,6 +9,13 @@ class Endereco extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+    public static function fromCEP($cep)
+    {
+
+    }
+
     public function proprietario()
     {
         return $this->morphTo();
