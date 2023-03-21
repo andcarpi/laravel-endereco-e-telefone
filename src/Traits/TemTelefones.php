@@ -8,8 +8,6 @@ trait TemTelefones
 {
     /**
      * Get all phones for this model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function telefones(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
@@ -18,8 +16,6 @@ trait TemTelefones
 
     /**
      * Get the phone for this model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
     public function telefone(): \Illuminate\Database\Eloquent\Relations\MorphOne
     {
@@ -28,8 +24,6 @@ trait TemTelefones
 
     /**
      * Check if model has a phone.
-     *
-     * @return bool
      */
     public function temTelefones(): bool
     {
